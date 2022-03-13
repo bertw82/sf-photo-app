@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react';
 import apiKey from '../config/apiKey';
 import userId from '../config/userId';
 import Pagination from './Pagination';
-import Post from './Post';
 
 function App() {
   const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&user_id=${userId}&format=json&nojsoncallback=1`;
@@ -14,7 +13,6 @@ function App() {
   useEffect(() => {
     fetch(url)
       .then(response => {
-        // console.log(response.json())
         if (response.ok) {
           console.log(response)
           return response.json();
@@ -24,9 +22,7 @@ function App() {
       })
       .then(posts => setPosts(posts.photos.photo))
       .catch(error => setError(error.message))
-  }, []);
-
-  console.log(posts);
+  }, [url]);
 
   if (error) return <h1>{error}</h1>;
 
@@ -36,9 +32,7 @@ function App() {
         <>
           <Pagination
             data={posts}
-            RenderComponent={Post}
             title="Pictures"
-            pageLimit={5}
             dataLimit={7}
           />
         </>
