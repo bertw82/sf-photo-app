@@ -40,17 +40,25 @@ function Pagination({
     return buttons;
   }
 
-  return (
-    <div className="dataContainer">
-      <h1>{title}</h1>
-      <ul className="pictureList">
-        {pictures}
-      </ul>
-      <ul className="buttonList">
-        {addPagination()}
-      </ul>
-    </div>
-  );
+  if (data.length > 0) {
+    return (
+      <div className="dataContainer">
+        <h1>{title}</h1>
+        <ul className="pictureList">
+          {pictures}
+        </ul>
+        <ul className="buttonList">
+          {addPagination()}
+        </ul>
+      </div>
+    )
+  } else {
+    return (
+      <h1>Loading...</h1>
+    )
+  }
 }
+    
+
 
 export default Pagination;
