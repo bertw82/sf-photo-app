@@ -3,7 +3,7 @@ function Post(props) {
     const { id, secret, server, title } = props.data;
     return (
       <li>
-        <img src={`https://live.staticflickr.com/${server}/${id}_${secret}_B.jpg`} alt={title} />
+        <img src={`https://live.staticflickr.com/${server}/${id}_${secret}_b.jpg`} alt={title} />
       </li>
     );
   } else {
