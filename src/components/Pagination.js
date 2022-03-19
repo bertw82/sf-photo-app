@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Post from "./Post";
 import {Link} from "react-router-dom";
 
+// this component creates the photo gallery and pagination buttons 
 function Pagination({
   data,
   title,
@@ -11,6 +12,7 @@ function Pagination({
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pictures, setPictures] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // function to show the pictures on the page, limited to the dataLimit (currently 9)
@@ -26,8 +28,9 @@ function Pagination({
     }
     // show the pictures for the current page
     showData(currentPage);
-    // Scroll to the top of the page
-    window.scrollTo({ behavior: 'smooth', top: '0px' });
+    setLoading(false);
+    // Scroll to the top of the page. I picked this up from this tutorial: https://academind.com/tutorials/reactjs-pagination
+    window.scrollTo({ behavior: 'smooth', top: '0px' }); 
   }, [currentPage, data, dataLimit])
 
   // listen for button clicks, then change the current page to the button selected
@@ -50,11 +53,15 @@ function Pagination({
 
   if (error) {
     return (
-      <div>
+      <div className="dataContainer">
         <h1>Uh Oh! Something is not working!</h1>
       </div>
     ); 
-  } else if (data.length > 0) {
+  } else if (loading) {
+    return (
+      <h1>Loading...</h1>
+    )
+  } else {
     return (
       <div className="dataContainer">
         <h1>{title}</h1>
@@ -66,10 +73,6 @@ function Pagination({
           {addPagination()}
         </ul>
       </div>
-    )
-  } else {
-    return (
-      <h1>Loading...</h1>
     )
   }
 }

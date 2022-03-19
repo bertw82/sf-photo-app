@@ -16,7 +16,7 @@ import {
 */
 function AppContents() {
   const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&user_id=${userId}&format=json&nojsoncallback=1`;
-
+  // const url = 'https://httpstat.us/500'; // url to check for 500 servers errors
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
 
@@ -31,7 +31,7 @@ function AppContents() {
       .catch(error => setError(error.message))
   }, [url]);
 
-  // the only way to pass the react-testing-library test was to use useRoutes() then wrap the routes in another component
+  // the only way I could pass the react-testing-library test was to use useRoutes() then wrap the routes in another component
   let routes = useRoutes([
     { path: "/",
       element: <Navigate replace to="/home" />
