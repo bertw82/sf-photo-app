@@ -11,6 +11,11 @@ body {
 
 }
 
+.navy {
+  background-color: navy;
+  width: 100%;
+}
+
 a {
   color: white;
 }
