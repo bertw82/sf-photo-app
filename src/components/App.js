@@ -1,7 +1,5 @@
 import '../css/App.css';
 import {useState, useEffect} from 'react';
-import apiKey from '../config/apiKey';
-import userId from '../config/userId';
 import Pagination from './Pagination';
 import NotFound from './NotFound';
 import Video from './Video';
@@ -12,24 +10,26 @@ import {
 } from "react-router-dom";
 
 /**
-* In this function I make an API call to Flickr then pass the pictures to the Pagination Component  
+* In this function I make an API call to my Netlify function then pass the pictures to the Pagination Component  
 */
 function AppContents() {
-  const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&user_id=${userId}&format=json&nojsoncallback=1`;
-  // const url = 'https://httpstat.us/500'; // url to check for 500 servers errors
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(url)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } 
-      })
-      .then(posts => setPosts(posts.photos.photo))
-      .catch(error => setError(error.message))
-  }, [url]);
+    async function fetchPictures() {
+      const url = `/.netlify/functions/flickrURL`;
+      try {
+        await fetch(url)
+        .then(res => res.json())
+        .then(res => setPosts(res.photos.photo));
+      } catch(err) {
+        console.log(err);
+        setError(err);
+      } 
+    }
+    fetchPictures();
+  }, []);
 
   // the only way I could pass the react-testing-library test was to use useRoutes() then wrap the routes in another component
   let routes = useRoutes([
