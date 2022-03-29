@@ -108,7 +108,7 @@ button {
   }
 
   .enter {
-    background-color: #ffffff;
+    background-color: transparent;
     width: 180px;
     left: 20px;
     top: 50%;
