@@ -7,15 +7,14 @@ function Pagination({
   data,
   title,
   dataLimit,
-  error
+  error,
+  isLoading
 }) {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pictures, setPictures] = useState('');
-  const [loading, setLoading] = useState('');
 
   useEffect(() => {
-    setLoading(true);
     // function to show the pictures on the page, limited to the dataLimit (currently 9)
     function showData(page) {
       const startIndex = (page * dataLimit) - dataLimit;
@@ -29,7 +28,6 @@ function Pagination({
     }
     // show the pictures for the current page
     showData(currentPage);
-    setLoading(false);
     // Scroll to the top of the page. I picked this up from this tutorial: https://academind.com/tutorials/reactjs-pagination
     window.scrollTo({ behavior: 'smooth', top: '0px' }); 
   }, [currentPage, data, dataLimit])
@@ -63,7 +61,7 @@ function Pagination({
   return (
     <>
       {
-        loading ? <h1>Loading...</h1>
+        isLoading ? <h1>Loading...</h1>
         : (
         <div className="dataContainer">
           <h1>{title}</h1>

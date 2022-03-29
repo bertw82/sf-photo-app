@@ -15,18 +15,22 @@ import {
 function AppContents() {
   const [posts, setPosts] = useState([]);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchPictures() {
       const url = `/.netlify/functions/flickrURL`;
       try {
+        setLoading(true);
         await fetch(url)
         .then(res => res.json())
         .then(res => setPosts(res.photos.photo));
       } catch(err) {
         console.log(err);
         setError(err);
-      } 
+      } finally {
+        setLoading(false);
+      }
     }
     fetchPictures();
   }, []);
@@ -47,6 +51,7 @@ function AppContents() {
         title="San Francisco Trip 1/22"
         dataLimit={9}
         error={error}
+        isLoading={loading}
       />
     },
     {
