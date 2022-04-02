@@ -61,7 +61,7 @@ function Pagination({
   return (
     <>
       {
-        isLoading ? <h1>Loading...</h1>
+        isLoading || !(pictures.length > 0) ? <h1>Loading...</h1>
         : (
         <div className="dataContainer">
           <h1>{title}</h1>
