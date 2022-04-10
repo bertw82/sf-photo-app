@@ -28,6 +28,7 @@ function Video() {
         src={source}
         type={type}
         autoPlay 
+        playsInline
         controls 
         loop
       />
